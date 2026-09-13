@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # db service
+  db:
+    image: postgres:15-alpine
+    container_name: finance_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: financedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # backend (fastapi + sqlalchemy) service
+  backend:
+      build: ./backend
+      container_name: finance_backend
+      restart: always
+      ports:
+        - "8000:8000"
+      environment:
+        - DATABASE_URL=postgresql://postgres:secretpassword@db:5432/financedb
+      depends_on:
+        - db
+
+
+# persistent db saving - doesnt get deleted when restarting the container
+volumes:
+  pgdata:
+
+  
