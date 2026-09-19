@@ -13,3 +13,9 @@ class TransactionModel(Base):
     category: Mapped[str]
     date: Mapped[datetime] = mapped_column(
         DateTime, default=lambda: datetime.now(timezone.utc))
+
+
+class CategoryModel(Base):
+    __tablename__ = "categories"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
