@@ -1,4 +1,4 @@
-'client' // If using Next.js App Router, ensure this is a client component for state
+'use client' // If using Next.js App Router, ensure this is a client component for state
 
 import { useState, useEffect } from 'react';
 import { getTransactions } from '@/lib/api'; // Adjust path if needed
