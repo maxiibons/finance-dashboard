@@ -4,13 +4,22 @@ from db import models, schemas
 from typing import List
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends, HTTPException
-from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 
 # Automatically create database tables if they don't exist yet
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Finance Dashboard API")
+
+# Ensure this middleware is added before your routers/endpoints
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://*.vercel.app"],
+    allow_credentials=True,
+    allow_methods=["*"],  # Must allow OPTIONS/all methods
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
